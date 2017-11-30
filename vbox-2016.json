@@ -22,10 +22,21 @@
       "floppy_files": [
         "answer_files/2016/Autounattend.xml",
         "scripts/winrm.ps1"
+      ],
+      "floppy_dirs": [
+        "ca-certs"
       ]
     }
   ],
   "provisioners": [
+    {
+      "type": "powershell",
+      "inline": [
+        "Get-ChildItem A:\\ca-certs | Import-Certificate -CertStoreLocation Cert:\\LocalMachine\\Root\\"
+      ],
+      "elevated_user": "vagrant",
+      "elevated_password": "vagrant"
+    },
     {
       "type": "chef-solo",
       "cookbook_paths": ["cookbooks", "vendor/cookbooks"],
